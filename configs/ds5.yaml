@@ -1,0 +1,51 @@
+
+default:
+  model_class: 'sVAR'
+  tau: 1.0e-6
+  rho: 1
+  max_admm_iter: 2000
+  admm_tol: 0.01
+  tol: 0.02
+  max_epoch: 20
+  threshold_A: 0.005
+  threshold_B: 0.05
+
+## setting: T4 5%
+ds5-200:
+  nlags: 2
+  mu_A: 0.06
+  mu_B: 0.1
+  mu_B_refit: 0.8
+
+## setting: T4 5%
+ds5-100:
+  nlags: 2
+  mu_A: 0.06
+  mu_B: 0.2
+  mu_B_refit: 0.3
+
+## setting: T4 5%
+ds5-50:
+  nlags: 2
+  mu_A: 0.08
+  mu_B: 0.3
+  mu_B_refit: 0.1
+
+## setting: T4 5%
+ds5-200-standardize:
+  nlags: 2
+  mu_A: 0.03
+  mu_B: 0.1
+  mu_B_refit: 0.12
+
+## setting: T4 5%
+ds5-100-standardize:
+  nlags: 2
+  mu_A: 0.03
+  mu_B: 0.1
+
+## setting: T4 5%
+ds5-50-standardize:
+  nlags: 2
+  mu_A: 0.03
+  mu_B: 0.1

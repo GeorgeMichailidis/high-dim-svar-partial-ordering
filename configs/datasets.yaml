@@ -1,0 +1,106 @@
+defaults:
+  n_replica: 10
+  n_max: 1000
+  data_folder: 'data/sim'
+
+ds1:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.05
+  A_sigLow: 0.25
+  A_sigHigh: 0.90
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: [0.8,1.5]
+  noise_type: 'Gaussian'
+  seed: 396
+
+ds2:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.10
+  A_sigLow: 0.25
+  A_sigHigh: 0.70
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: [0.8,1.5]
+  noise_type: 'Gaussian'
+  seed: 737
+
+ds3:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.05
+  A_sigLow: 0.25
+  A_sigHigh: 0.90
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: 1
+  noise_type: 'Laplace'
+  seed: 396
+
+ds4:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.10
+  A_sigLow: 0.25
+  A_sigHigh: 0.70
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: 1
+  noise_type: 'Laplace'
+  seed: 737
+
+ds5:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.05
+  A_sigLow: 0.25
+  A_sigHigh: 0.90
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: 1
+  noise_type: 'T4'
+  seed: 396
+
+ds6:
+  p: 100
+  nlags: 2
+  A_sparsity: 0.10
+  A_sigLow: 0.25
+  A_sigHigh: 0.70
+  A_type: 'erdos-renyi'
+  A_permutation: False
+  B_sparsity: [0.05,0.02]
+  B_sigLow: 1
+  B_sigHigh: 3
+  B_sigDecay: 1
+  B_targetSR: 0.5
+  sigma: 1
+  noise_type: 'T4'
+  seed: 737

@@ -1,0 +1,40 @@
+
+default:
+  model_class: 'sVAR'
+  tau: 1.0e-6
+  rho: 1
+  max_admm_iter: 2000
+  admm_tol: 0.01
+  tol: 0.02
+  max_epoch: 20
+  threshold_A: 0.005
+  threshold_B: 0.05
+
+## setting: Laplace 10%
+ds4-50:
+  admm_tol: 0.0001
+  nlags: 2
+  mu_A: 0.04
+  mu_B: 0.25
+  mu_B_refit: 0.005
+
+ds4-100:
+  admm_tol: 0.0001
+  nlags: 2
+  mu_A: 0.04
+  mu_B: 0.20
+  mu_B_refit: 0.02
+  
+ds4-200:
+  admm_tol: 0.0001
+  nlags: 2
+  mu_A: 0.055
+  mu_B: 0.12
+  mu_B_refit: 1.2
+
+## setting: Laplace 10%
+ds4-200-standardize:
+  nlags: 2
+  mu_A: 0.008
+  mu_B: 0.1
+  mu_B_refit: 0.015
