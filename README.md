@@ -49,7 +49,7 @@ python -u run_sim.py --ds_str=ds4 --train_size=200 --standardize ## with standar
 * One can selectively overrides the default parameters, by providing the values to the corresponding keys.  
 * Add flag `--report` to get the TPR and TNR for this replicate. 
 
-Notes: see L44-L55 for how the model class is instantiated; see L74 for triggering model fitting through the `.fit()` method, with which the structural and the lag components are being estimated. 
+Notes: see L65 for how the model class is instantiated; see L97 for triggering model fitting through the `.fit()` method, with which the structural and the lag components are being estimated. 
 
 ## Real Data
 
