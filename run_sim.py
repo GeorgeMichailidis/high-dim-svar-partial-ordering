@@ -66,7 +66,7 @@ def main():
                     rho = args.configs['rho'],
                     max_admm_iter = args.configs['max_admm_iter'],
                     admm_tol = args.configs['admm_tol'],
-                    verbose = 10,
+                    verbose = 0,
                     tol = args.configs['tol'],
                     max_epoch = args.configs['max_epoch'],
                     threshold_A = args.configs['threshold_A'],

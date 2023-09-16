@@ -229,7 +229,7 @@ class pyAdmmUpdate():
                 break
             
             if self.verbose > 0:
-                if itr % self.verbose == 0:
+                if (itr +1) % self.verbose == 0:
                     print(f' >> admm_iter = {itr}, delta_loss = {loss_cur-loss_prev:.5f}, l2loss = {loss_cur:.2f}, primal = {primal_cur:.2f}')
             
             if np.abs(loss_cur - loss_prev) < self.admm_tol:
