@@ -223,6 +223,7 @@ class pyAdmmUpdate():
             
             ## track l2loss, determine convergence
             loss_cur = self.l2loss(X,Z,A,B)
+            l2loss_vals.append(loss_cur)
             
             if loss_cur > 1e4:
                 print(f' >> admm_iter = {itr}, l2loss = {loss_cur:.2f} exceeds the pre-set explosion threshold at 1e4; force break')
