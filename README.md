@@ -21,7 +21,7 @@ pip install wget
 
 ## Outline of the Repo
 To facilitate the users in traversing the repository, we provide a brief outline for the organization of this repository
-* `src/`: hosts the core implementation of the proposed methodology; in particular, to speed up the ADMM step, the ADMM update is implemented in Cpp and then wrapped through python. 
+* `src/`: hosts the core implementation of the proposed methodology 
 * `utils/`: hosts the utility functions/classes related to graphs, synthetic data generation and performance evaluation
 * `configs/`: hosts the config file for synthetic data generation and sample configs for performing model fitting
 * `data/`: hosts the scripts for pre-processing the datasets used in the real data experiments. This is also the location where the raw data should be stored (see section Real Data Experiments for more details)
@@ -30,7 +30,7 @@ To facilitate the users in traversing the repository, we provide a brief outline
 ## Synthetic Data Generation
 The following command allows one to simulate data according to the description in the synthetic data experiment section. 
 ```console
-python -u simulate_data.py --datasets=ds4
+python -u simulate_data.py --datasets=ds3
 ```
 * To simulate multiple datasets all at once, specify them through a comma separated string; e.g., `--datasets=ds1,ds2,ds3`
 * The default config file being used is `configs/datasets.yaml`; each section key corresponds to the specific setting of interest. By default, 1 replicate of the designated dataset(s) will be generated and saved in their respective folders under `data/sim/${DATASET_OF_INTEREST}`
@@ -40,14 +40,14 @@ python -u simulate_data.py --datasets=ds4
 ## Model Fitting
 The following command allows one to perform estimation on a specific synthetic dataset:
 ```console
-python -u run_sim.py --ds_str=ds4 --train_size=200 ## without standardization
-python -u run_sim.py --ds_str=ds4 --train_size=200 --standardize ## with standardization
+python -u run_sim.py --ds_str=ds3 --train_size=200 ## without standardization
+python -u run_sim.py --ds_str=ds3 --train_size=200 --standardize ## with standardization
 ```
 * run parameters are specified through `configs/${DATASE_OF_INTEREST}.yaml`. 
 * section `default` specifies the default parameters used in the ADMM step, which are typically fairly robust.
 * setting-specific parameters are specified under their respective sections, in the format of `${DATASE_OF_INTEREST}-${TRAIN_SIZE}${STANDARDIZATION_SUFFIX}`. 
 * One can selectively overrides the default parameters, by providing the values to the corresponding keys.  
-* Add flag `--report` to get the TPR and TNR for this replicate. 
+* Add flag `--report` to get the performance evaluation this replicate. 
 
 Notes: see L65 for how the model class is instantiated; see L97 for triggering model fitting through the `.fit()` method, with which the structural and the lag components are being estimated. 
 
@@ -65,9 +65,9 @@ python -u data/macro/prep_macro_data.py --vintage=202209
 * In the case the raw data is not saved, data will be automatically downloaded and saved as `data/macro/CURRENT_Qraw.csv`, where CURRENT corresponds to the **current month** in YYYYMM format; as such, the specified vintage will be overriden. Note that the download step relies on `wget`. 
 
 ### DREAM4 Dataset
-The dataset can be accessed through R-bioManager. 
+The dataset can be accessed through R-biocManager. 
 
-The following command allows up to install the BiocManager and necessary libraries
+The following command allows one to install the BiocManager and necessary libraries
 ```console
 Rscript --vanilla data/dream4/setup.R
 ```
