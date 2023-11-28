@@ -21,10 +21,10 @@ from ctypes import cdll
 from sklearn.linear_model import Lasso
 from .customENet import CustomENet
 
-from .pyAdmmUpdate import pyAdmmUpdate
-#from .cAdmmUpdate import cAdmmUpdate
-#class _svarBase(cAdmmUpdate):
-class _svarBase(pyAdmmUpdate):
+#from .pyAdmmUpdate import pyAdmmUpdate
+#class _svarBase(pyAdmmUpdate):
+from .cPyAdmmUpdate import cAdmmUpdate
+class _svarBase(cAdmmUpdate):
     def __init__(
         self, 
         tau = 0.0001, 
