@@ -1,23 +1,28 @@
 # high-dim-structural-VAR-partial-ordering
 
-Code repository for paper titled "Structural Discovery with Partial Ordering Information for Time-Dependent Data with Convergence Guarantees", authored by Jiahe Lin, Huitian Lei and George Michailidis
+Code repository for paper titled **"Structural Discovery with Partial Ordering Information for Time-Dependent Data with Convergence Guarantees"**, authored by Jiahe Lin, Huitian Lei and George Michailidis. https://arxiv.org/abs/2311.15434. Accepted by the *Journal of Computational and Graphical Statistics*
 ```
 @article{lin2023Structural,
   title={Structural discovery with partial ordering information for time-dependent data with convergence guarantees},
   author={Lin, Jiahe and Lei, Huitian and Michailidis, George},
+  journal={arXiv preprint arXiv:2311.15434},
   year={2023}
 }
 ```
 
 ## Setup
 
-Configure the python environment (assuming anaconda/miniconda/miniforge has been installed):
-```console
-conda create -n svartest python=3.10
-conda activate svartest
-conda install pyyaml numpy pandas statsmodels scikit-learn networkx matplotlib openpyxl
-pip install wget
-```
+* Step 1: Configure the python environment (assuming one of anaconda/miniconda/miniforge has been installed):
+  ```console
+  conda create -n svar python=3.10
+  conda activate svar
+  conda install pyyaml numpy pandas statsmodels scikit-learn networkx matplotlib openpyxl
+  pip install wget
+  ```
+* Step 2: Compile the source file; this step creates the necessary shared library based on the source cpp 
+  ```
+  bash setup.sh
+  ```
 
 ## Outline of the Repo
 To facilitate the users in traversing the repository, we provide a brief outline for the organization of this repository
@@ -32,7 +37,7 @@ The following command allows one to simulate data according to the description i
 ```console
 python -u simulate_data.py --datasets=ds3
 ```
-* To simulate multiple datasets all at once, specify them through a comma separated string; e.g., `--datasets=ds1,ds2,ds3`
+* To simulate multiple datasets at once, specify them through a comma separated string; e.g., `--datasets=ds1,ds2,ds3`
 * The default config file being used is `configs/datasets.yaml`; each section key corresponds to the specific setting of interest. By default, 1 replicate of the designated dataset(s) will be generated and saved in their respective folders under `data/sim/${DATASET_OF_INTEREST}`
 * For synthetic data experiment, the partial ordering information is saved in `data/sim/${DATASE_OF_INTEREST}/graph_info.pickle`
 * Pass-in any alternative configuration file through `--config_override`
@@ -72,7 +77,7 @@ The following command allows one to install the BiocManager and necessary librar
 Rscript --vanilla data/dream4/setup.R
 ```
 
-To extract the data, refer to script `data/dream4/data_extract.R`; note that one needs to make necessary changes to L10-L14 and execute the script in the R console to extract the five datasets
+To extract the data, refer to script `data/dream4/data_extract.R`; note that one needs to make necessary changes to L10-L14 (see also below) and execute the script in the R console to extract the five datasets sequentially
 ```R
 ## 'dream4_100_01', 'dream4_100_02', 'dream4_100_03', 'dream4_100_04', 'dream4_100_05'
 filename = 'dream4_100_05'
@@ -86,6 +91,3 @@ To prep the data, execute the following command, which will save down the corres
 ```console
 python -u data/dream4/prep_dream4_data.py
 ```
-
-## Future Release Note
-Cpp version of the code will be included in the official public release to speed up the algorithm; the run time shortens by 20x-30x. 

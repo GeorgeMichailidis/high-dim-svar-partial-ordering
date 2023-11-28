@@ -29,9 +29,11 @@ from sklearn.metrics import mean_squared_error
 
 from utils import Evaluator
 
-###################################
+################################################################################
+## modify the list here to select which prior-key settings to run
+## in the case where it's empty, it corresponds to running the no-prior case
 _PRIORKEYs = [] #[0.10, 0.20, 0.50]
-###################################
+################################################################################
     
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--ds_str', type=str, help='dataset to run',default='ds1')
