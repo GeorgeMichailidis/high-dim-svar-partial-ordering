@@ -1,12 +1,18 @@
 # high-dim-structural-VAR-partial-ordering
 
-Code repository for paper titled **"Structural Discovery with Partial Ordering Information for Time-Dependent Data with Convergence Guarantees"**, authored by Jiahe Lin, Huitian Lei and George Michailidis. https://arxiv.org/abs/2311.15434. Accepted by the *Journal of Computational and Graphical Statistics*
+Code repository for paper titled **"Structural Discovery with Partial Ordering Information for Time-Dependent Data with Convergence Guarantees"**, authored by Jiahe Lin, Huitian Lei and George Michailidis. https://arxiv.org/abs/2311.15434. *Journal of Computational and Graphical Statistics, 2024*
 ```
-@article{lin2023Structural,
+@article{lin2024Structural,
   title={Structural discovery with partial ordering information for time-dependent data with convergence guarantees},
-  author={Lin, Jiahe and Lei, Huitian and Michailidis, George},
-  journal={arXiv preprint arXiv:2311.15434},
-  year={2023}
+  author = {Jiahe Lin, Huitian Lei and George Michailidis},
+  title = {Structural Discovery with Partial Ordering Information for Time-Dependent Data with Convergence Guarantees},
+  journal = {Journal of Computational and Graphical Statistics},
+  volume = {0},
+  number = {0},
+  pages = {1-10},
+  year = {2024},
+  publisher = {Taylor & Francis},
+  doi = {10.1080/10618600.2023.2301097}
 }
 ```
 
@@ -19,6 +25,8 @@ Code repository for paper titled **"Structural Discovery with Partial Ordering I
   conda install pyyaml numpy pandas statsmodels scikit-learn networkx matplotlib openpyxl
   pip install wget
   ```
+  See also `requirements.txt`.
+
 * Step 2: Compile the source file; this step creates the necessary shared library based on the source cpp 
   ```
   bash setup.sh
@@ -91,3 +99,7 @@ To prep the data, execute the following command, which will save down the corres
 ```console
 python -u data/dream4/prep_dream4_data.py
 ```
+
+## Contact
+* For general questions on the paper, contact George Michailidis [gmichail AT ucla DOT edu] 
+* For questions on the code implementation, contact Jiahe Lin [jiahelin AT umich DOT edu]
