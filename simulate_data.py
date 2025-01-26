@@ -9,52 +9,49 @@ works. This copyright statement should not be removed or edited.
 
 -----do not edit anything above this line---
 """
-
-import sys
-import os
-import shutil
-import yaml
-import pickle
 import argparse
 import datetime
+import os
+import sys
+import shutil
+
 import numpy as np
+import pickle
+import yaml
 
 from utils import sVarGenerator
+from utils.utils_logging import get_logger
 
-parser = argparse.ArgumentParser(description='')
-parser.add_argument('--datasets', type=str, help='ids for dataset to be generated,separated by comma',default='ds1')
-parser.add_argument('--config_override', type=str, help='path for the overriding config file used for generating datasets, default to empty string', default='')
+logger = get_logger()
 
 def main():
     
-    print(os.getcwd())
-    
-    global args
-    args = parser.parse_args()
-    setattr(args,'datasets',args.datasets.split(','))
+    args.datasets = args.datasets.split(',')
     if len(args.config_override):
-        setattr(args, 'config', args.config_override)
+        args.config = args.config_override
         del args.config_override
     else:
-        setattr(args, 'config', './configs/datasets.yaml')
-
+        args.config = os.path.join('configs', 'datasets.yaml')
+    logger.info(f"datasets={args.datasets}; config file={args.config}")
+    
     with open(args.config) as f:
         meta_config = yaml.safe_load(f)
     
     ## read out some default setting
     if not os.path.exists(meta_config['defaults']['data_folder']):
         os.makedirs(meta_config['defaults']['data_folder'])
-    
-    print(f"datasets={args.datasets}")
-
+        logger.info(f"folder {meta_config['defaults']['data_folder']} created")
+        
     for data_str in args.datasets:
         
-        log = f"{meta_config['defaults']['data_folder']}/log_{data_str}_{datetime.datetime.now().strftime('%Y%m%d')}.log"
-        sys.stdout = open(log, 'w')
-        
-        print(f"py={'.'.join(map(str,sys.version_info[:3]))}")
-        print(f"np={np.__version__}")
-        print(f"config={args.config}",end='\n\n')
+        log_path = f"{meta_config['defaults']['data_folder']}/log_{data_str}_{datetime.datetime.now().strftime('%Y%m%d')}.log"
+        if not os.path.exists(log_path):
+            logger.info(f"more detailed logs will be redicted to `{log_path}`")
+        else:
+            logger.warning(f"more detailed logs will overwrite existing log file `{log_path}`")
+            
+        sys.stdout = open(log_path, 'w')
+        print(f"config file={args.config}", end='\n\n')
         
         config = meta_config['defaults'].copy()
         config.update(meta_config[data_str])
@@ -85,7 +82,7 @@ def main():
                                     max_trials=10000,
                                     verbose_trials=False)
         ## save down
-        folder_name = f"{meta_config['defaults']['data_folder']}/{data_str}"
+        folder_name = os.path.join(meta_config['defaults']['data_folder'], data_str)
         if not os.path.exists(folder_name):
             os.mkdir(folder_name)
         else:
@@ -93,14 +90,17 @@ def main():
             os.mkdir(folder_name)
         
         for key, value in meta_data.items():
-            with open(f'{folder_name}/{key}.pickle', 'wb') as handle:
+            with open(os.path.join(folder_name, f'{key}.pickle'), 'wb') as handle:
                 pickle.dump(value, handle, protocol = pickle.HIGHEST_PROTOCOL)
             print(f' > SAVED: {folder_name}/{key}.pickle')
         
         ## save the graph
-        data_generator.draw_graph(meta_data['graph_info']['graph_A'], save_file = f'{folder_name}/graph_A.png')
+        data_generator.draw_graph(meta_data['graph_info']['graph_A'],
+                                  save_file = os.path.join(folder_name, 'graph_A.png'))
         ## save a sample data
-        data_generator.draw_sample_x(meta_data['data'][0], draw_count = 4, save_file = f'{folder_name}/selected_x.png')
+        data_generator.draw_sample_x(meta_data['data'][0],
+                                     draw_count = 4,
+                                     save_file = os.path.join(folder_name, 'selected_x.png'))
         
         ## print config to log
         print(f'\n********** config used **********')
@@ -109,8 +109,26 @@ def main():
         sys.stdout.close()
         sys.stdout = sys.__stdout__
     
+    logger.info("done")
     return 0
 
 if __name__ == "__main__":
+    
+    logger.info(f"python={'.'.join(map(str,sys.version_info[:3]))}; np={np.__version__}")
+    logger.info(f"CWD={os.getcwd()}")
+    
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument('--datasets',
+                        type=str,
+                        help='ids for dataset to be generated, separated by comma',
+                        default='ds1')
+    parser.add_argument('--config_override',
+                        type=str,
+                        help='path for the overriding config file used for generating datasets, default to empty string',
+                        default='')
+
+    global args
+    args = parser.parse_args()
+    
     main()
     
