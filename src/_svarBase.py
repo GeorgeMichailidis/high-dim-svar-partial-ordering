@@ -9,21 +9,23 @@ works. This copyright statement should not be removed or edited.
 
 -----do not edit anything above this line---
 """
-
-
-import time
-import datetime
-import warnings
-import numpy as np
-from numpy.ctypeslib import ndpointer
 import ctypes
 from ctypes import cdll
+import time
+import warnings
+
+import numpy as np
+from numpy.ctypeslib import ndpointer
 from sklearn.linear_model import Lasso
+
 from .customENet import CustomENet
+from .cPyAdmmUpdate import cAdmmUpdate
+from utils.utils_logging import get_logger
+
+logger = get_logger()
 
 #from .pyAdmmUpdate import pyAdmmUpdate
 #class _svarBase(pyAdmmUpdate):
-from .cPyAdmmUpdate import cAdmmUpdate
 class _svarBase(cAdmmUpdate):
     def __init__(
         self, 
@@ -142,7 +144,7 @@ class _svarBase(cAdmmUpdate):
         """
         main function for fitting an SVAR
         """
-        print(f'[{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] Start fitting SVAR')
+        logger.info(f'Start fitting SVAR')
         ###############################
         ## 0: initial data prep
         ###############################
@@ -247,7 +249,7 @@ class _svarBase(cAdmmUpdate):
         else:
             B = self._postproc_B(B, Btilde)
         
-        print(f'[{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}] Done fitting SVAR')
+        logger.info(f'Done fitting SVAR')
         return {'A':A,
                 'B':B,
                 'Atilde': admm_out['Atilde'],
@@ -270,7 +272,9 @@ class _svarBase(cAdmmUpdate):
         return X, X_pred
         
     def forecast(self, xdata, A, B, horizon):
-        """conduct forecast based on a SVAR model"""
+        """
+        conduct forecast based on a SVAR model
+        """
         B_reduced = np.zeros(B.shape)
         p,q = B.shape[0],B.shape[-1] ## number of lags
         I_mins_A_inv =  np.linalg.inv(np.identity(A.shape[1])-A)

@@ -10,50 +10,36 @@ works. This copyright statement should not be removed or edited.
 
 -----do not edit anything above this line---
 """
-
-
+import argparse
+import importlib
+import json
+import pickle
 import os
 import sys
 
-print(f'python version={".".join(map(str,sys.version_info[:3]))}')
-print(f'current working dir={os.getcwd()}')
-
-import yaml
-import importlib
-import argparse
-import pickle
-import json
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
+import yaml
 
 from utils import Evaluator
+from utils.utils_logging import get_logger
+
+logger = get_logger()
 
 ################################################################################
 ## modify the list here to select which prior-key settings to run
 ## in the case where it's empty, it corresponds to running the no-prior case
 _PRIORKEYs = [] #[0.10, 0.20, 0.50]
 ################################################################################
-    
-parser = argparse.ArgumentParser(description='')
-parser.add_argument('--ds_str', type=str, help='dataset to run',default='ds1')
-parser.add_argument('--replica_id', type=int, help='replica id',default=0)
-parser.add_argument('--train_size', type=int, help='sample size used for model training',default=200)
-parser.add_argument('--standardize',help='whether to standardize the data',action='store_true')
-parser.add_argument('--report',help='whether to report metrics',action='store_true')
 
 def main():
-    
-    global args
-    args = parser.parse_args()
     
     _CONFIG = os.path.join('configs',f'{args.ds_str}.yaml')
     
     config_key = f'{args.ds_str}-{args.train_size}' + ('' if not args.standardize else '-standardize')
-    print(f'===========================')
-    print(f'* ds_str={args.ds_str}; train_size={args.train_size}; standardize={args.standardize}; config_file={_CONFIG}, config_key={config_key}')
-    print(f'===========================')
-
+    logger.info(f'ds_str={args.ds_str}; train_size={args.train_size}; standardize={args.standardize}; config_file={_CONFIG}, config_key={config_key}')
+    
     with open(_CONFIG) as f:
         meta_config = yaml.safe_load(f)
     
@@ -144,4 +130,18 @@ def get_x_report_forecast(x_forecast_actual, x_forecast):
     return {'forecast_l2': round(rmse,3)}
 
 if __name__ == "__main__":
+
+    logger.info(f'python version={".".join(map(str,sys.version_info[:3]))}')
+    logger.info(f'current working dir={os.getcwd()}')
+        
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument('--ds_str', type=str, help='dataset to run',default='ds1')
+    parser.add_argument('--replica_id', type=int, help='replica id',default=0)
+    parser.add_argument('--train_size', type=int, help='sample size used for model training',default=200)
+    parser.add_argument('--standardize',help='whether to standardize the data',action='store_true')
+    parser.add_argument('--report',help='whether to report metrics',action='store_true')
+
+    global args
+    args = parser.parse_args()
+    
     main()
